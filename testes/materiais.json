@@ -1,0 +1,27 @@
+{
+    "configuracoes": {
+        "kit_padrao_cateterismo": [
+            {"nome": "introdutor", "calibre_padrao": "5F"},
+            {"nome": "manifold"}
+        ]
+    },
+    "catalogo": {
+        "acesso_e_diagnostico": [
+            {"nome": "introdutor", "calibres": ["5F", "6F"]},
+            {"nome": "manifold"},
+            {"nome": "JL 3.5", "calibres": ["5F", "6F"]},
+            {"nome": "JL 4.0", "calibres": ["5F", "6F"]},
+            {"nome": "JR 4.0", "calibres": ["5F", "6F"]},
+            {"nome": "Pigtail", "calibres": ["5F", "6F"]}
+        ],
+        "intervencao": {
+            "stents": [],
+            "baloes": [
+                {"marca": "insuflador", "tipo": "", "medidas": ["20atm"]}
+            ],
+            "guias": [
+                {"nome": "fio guia 0.014x180cm"}
+            ]
+        }
+    }
+}

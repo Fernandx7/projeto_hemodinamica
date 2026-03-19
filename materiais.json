@@ -1,0 +1,88 @@
+{
+  "configuracoes": {
+    "kit_padrao_cateterismo": [
+      { "nome": "Bainha", "calibre_padrao": "6F" },
+      { "nome": "Contraste 100ml" },
+      { "nome": "Cateter Diagnóstico JL 4.0", "calibre_padrao": "6F" },
+      { "nome": "Cateter Diagnóstico JR 4.0", "calibre_padrao": "6F" }
+    ]
+  },
+  "catalogo": {
+    "acesso_e_diagnostico": [
+      { "nome": "Bainha", "calibres": ["5F", "6F", "7F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JR 4.0", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 4.0", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Contraste 100ml", "procedimento": "cateterismo" }
+    ],
+    "intervencao": {
+      "stents": [
+        {
+          "marca": "Inspiron",
+          "medidas": [
+            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
+            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
+            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
+            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38", "3.0x48", "3.0x58",
+            "3.5x9", "3.5x13", "3.5x16", "3.5x19", "3.5x23", "3.5x29", "3.5x33", "3.5x38", "3.5x48", "3.5x58",
+            "4.0x9", "4.0x13", "4.0x16", "4.0x19", "4.0x23", "4.0x29"
+          ]
+        },
+        {
+          "marca": "Onyx Trucor",
+          "medidas": [
+            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
+            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
+            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
+            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38", "3.0x48",
+            "3.5x9", "3.5x13", "3.5x16", "3.5x19", "3.5x23", "3.5x29", "3.5x33", "3.5x38"
+          ]
+        },
+        {
+          "marca": "GuReater",
+          "medidas": [
+            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
+            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
+            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
+            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38"
+          ]
+        },
+        {
+          "marca": "FireHawk",
+          "medidas": [
+            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
+            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
+            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
+            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38"
+          ]
+        }
+      ],
+      "baloes": [
+        {
+          "marca": "Euphora",
+          "tipo": "SC",
+          "medidas": ["2.0x10", "2.5x15", "3.0x20"]
+        },
+        {
+          "marca": "Euphora",
+          "tipo": "NC",
+          "medidas": ["2.0x10", "2.5x15", "3.0x20"]
+        },
+        {
+          "marca": "Orion",
+          "tipo": "NC",
+          "medidas": ["2.0x12", "3.0x15", "3.5x15"]
+        },
+        {
+          "marca": "Orion",
+          "tipo": "SC",
+          "medidas": ["2.0x12", "3.0x15", "3.5x15"]
+        }
+      ],
+      "guias": [
+        { "nome": "Cateter Guia JR 4.0", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 4.0", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Fio Guia Rinato 3.5", "procedimento": "angioplastia" }
+      ]
+    }
+  }
+}

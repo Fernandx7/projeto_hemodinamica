@@ -1,0 +1,21 @@
+{
+    "nome": "Nome",
+    "cns": "703403210520912",
+    "nasc": "17/03/2026",
+    "procedencia": "DE ORIGEM",
+    "procedimento": "cateterismo",
+    "inicio": "10:27:31",
+    "materiais_cateterismo": [
+        "Bainha 6F",
+        "Contraste 100ml",
+        "Cateter Diagn\u00f3stico JL 4.0 6F",
+        "Cateter Diagn\u00f3stico JR 4.0 6F"
+    ],
+    "materiais_angioplastia": [
+        "insuflador 20atm",
+        "fio guia 0.014x180cm",
+        "Onyx Trucor 2.75x13",
+        "Orion NC 3.0x15"
+    ],
+    "evoluiu_angioplastia": true
+}

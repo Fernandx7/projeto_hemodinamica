@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="v9.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bin/v9.1/AppRecepcao.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/v9.1/AppHemo.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

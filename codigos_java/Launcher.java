@@ -1,0 +1,123 @@
+import javax.swing.*;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+
+public class Launcher {
+
+    // criar um json compartilhado para o AppHemo aqui
+    private static final String SERVER_URL = "https://hemodinamica.souzadev.software";
+    private static final String APP_JAR_NAME = "AppHemo.jar";
+    private static final String VERSION_FILE = "version.dat";
+
+    public static void main(String[] args) {
+        // Correção TLS para Java 8
+        System.setProperty("https.protocols", "TLSv1.2");
+
+        // Inicia o app diretamente sem verificar atualizações
+        launchApp();
+    }
+
+    private static void checkForUpdates(JLabel statusLabel) {
+        try {
+            // 1. Ler versão local
+            String localVersion = "0.0.0";
+            File vFile = new File(VERSION_FILE);
+            if (vFile.exists()) {
+                localVersion = new String(Files.readAllBytes(vFile.toPath()), StandardCharsets.UTF_8).trim();
+            }
+
+            // 2. Obter versão do servidor
+            statusLabel.setText("Verificando versão disponível no servidor...");
+            String jsonResponse = httpGet(SERVER_URL + "/api/version");
+
+            // Parse simples de JSON (evitando dependência org.json no Launcher)
+            // Esperado: {"version": "1.0.1", "filename": "AppHemo.jar"}
+            String serverVersion = extractJsonValue(jsonResponse, "version");
+
+            System.out.println("Local: " + localVersion + " | Server: " + serverVersion);
+
+            // 3. Comparar versões (String simples diferente)
+            if (!localVersion.equals(serverVersion)) {
+                statusLabel.setText("Baixando atualização " + serverVersion + "...");
+
+                File tempFile = new File(APP_JAR_NAME + ".tmp");
+                downloadFile(SERVER_URL + "/api/download/app", tempFile);
+
+                // Substituir o JAR antigo
+                File currentJar = new File(APP_JAR_NAME);
+                if (currentJar.exists()) {
+                    currentJar.delete();
+                }
+                tempFile.renameTo(currentJar);
+
+                // Atualizar arquivo de versão local
+                Files.write(vFile.toPath(), serverVersion.getBytes(StandardCharsets.UTF_8));
+
+                statusLabel.setText("Atualizado com sucesso!");
+                Thread.sleep(1000);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro na atualização: " + e.getMessage());
+            // Não bloqueia o fluxo, apenas segue para abrir o app
+        }
+    }
+
+    private static void launchApp() {
+        try {
+            File appJar = new File(APP_JAR_NAME);
+            if (!appJar.exists()) {
+                JOptionPane.showMessageDialog(null, "Erro: " + APP_JAR_NAME + " não encontrado.");
+                return;
+            }
+
+            // Inicia o AppHemo.jar em um novo processo
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", APP_JAR_NAME);
+            pb.inheritIO();
+            pb.start();
+
+            // Launcher encerra
+            System.exit(0);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao iniciar aplicação: " + e.getMessage());
+        }
+    }
+
+    // --- Utilitários de Rede ---
+
+    private static String httpGet(String urlStr) throws IOException {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 Launcher");
+        conn.setConnectTimeout(5000);
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) result.append(line);
+            return result.toString();
+        }
+    }
+
+    private static void downloadFile(String urlStr, File dest) throws IOException {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 Launcher");
+
+        try (InputStream in = conn.getInputStream()) {
+            Files.copy(in, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
+    // Parse manual simples para não depender de libs externas no Launcher
+    private static String extractJsonValue(String json, String key) {
+        String pattern = "\"" + key + "\":\\s*\"(.*?)\"";
+        java.util.regex.Pattern r = java.util.regex.Pattern.compile(pattern);
+        java.util.regex.Matcher m = r.matcher(json);
+        if (m.find()) return m.group(1);
+        return "";
+    }
+}
