@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Recepção - Envio de Fichas{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header text-center">
+        <h4>Envio de Fichas - Recepção</h4>
+    </div>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="files" class="form-label">Selecione as fichas (.doc ou .docx):</label>
+                <input type="file" name="files" id="files" class="form-control"
+                       accept=".doc,.docx" multiple required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg">Enviar</button>
+            </div>
+        </form>
+
+        {% if enviados %}
+        <div class="alert alert-success mt-4">
+            <b>Arquivos enviados com sucesso:</b>
+            <ul>
+                {% for f in enviados %}
+                <li>{{ f }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if erros %}
+        <div class="alert alert-danger mt-4">
+            <b>Ocorreram erros:</b>
+            <ul>
+                {% for e in erros %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

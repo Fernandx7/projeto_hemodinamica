@@ -1,0 +1,15 @@
+[Unit]
+Description=Servidor de IA - Laudo Falado
+After=network.target
+
+[Service]
+User=fernando
+Group=fernando
+WorkingDirectory=/home/fernando/projeto_hemodinamica/laudo_falado
+Environment="PATH=/home/fernando/projeto_hemodinamica/laudo_falado/venv/bin"
+ExecStart=/home/fernando/projeto_hemodinamica/laudo_falado/venv/bin/python3 app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

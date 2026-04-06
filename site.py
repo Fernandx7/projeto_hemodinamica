@@ -7,7 +7,7 @@ import json
 from datetime import datetime
 from urllib.parse import unquote
 
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, render_template, send_file, redirect, url_for
 from docx import Document
 
 app = Flask(__name__)
@@ -233,12 +233,12 @@ def index():
 
                 shutil.move(caminho_docx, caminho_destino)
                 
-                # Gera laudos automáticos
-                gerados = gerar_laudos_automaticos(nome_paciente, dados_ficha)
+                # Gera laudos automáticos (COMENTADO POR SOLICITAÇÃO)
+                # gerados = gerar_laudos_automaticos(nome_paciente, dados_ficha)
                 
                 msg = f"{f.filename} → {nome_final}"
-                if gerados:
-                    msg += f" (Laudos gerados: {', '.join(gerados)})"
+                # if gerados:
+                #     msg += f" (Laudos gerados: {', '.join(gerados)})"
                 enviados.append(msg)
 
             except Exception as e:
@@ -448,6 +448,46 @@ def baixar(filename):
             return send_file(caminho, as_attachment=True)
 
     return "Arquivo não encontrado", 404
+
+
+@app.route('/excluir/<filename>', methods=['POST'])
+def excluir_arquivo_post(filename):
+    filename = unquote(filename)
+    
+    sucesso = False
+    for pasta in [UPLOAD_FOLDER, PROCESSED_FOLDER]:
+        caminho = os.path.join(pasta, filename)
+        if os.path.exists(caminho):
+            try:
+                os.remove(caminho)
+                sucesso = True
+            except Exception as e:
+                print(f"Erro ao excluir {caminho}: {e}")
+    
+    if sucesso:
+        return redirect(url_for('historico'))
+    
+    return "Arquivo não encontrado ou erro ao excluir", 404
+
+
+@app.route('/excluir_multiplos', methods=['POST'])
+def excluir_multiplos():
+    filenames = request.form.getlist('filenames')
+    
+    if not filenames:
+        return redirect(url_for('historico'))
+        
+    for filename in filenames:
+        filename = unquote(filename)
+        for pasta in [UPLOAD_FOLDER, PROCESSED_FOLDER]:
+            caminho = os.path.join(pasta, filename)
+            if os.path.exists(caminho):
+                try:
+                    os.remove(caminho)
+                except Exception as e:
+                    print(f"Erro ao excluir {caminho}: {e}")
+    
+    return redirect(url_for('historico'))
 
 
 @app.route('/api/modelo/<tipo>')

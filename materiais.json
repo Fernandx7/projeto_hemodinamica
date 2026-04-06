@@ -1,58 +1,79 @@
 {
   "configuracoes": {
     "kit_padrao_cateterismo": [
-      { "nome": "Bainha", "calibre_padrao": "6F" },
-      { "nome": "Contraste 100ml" },
-      { "nome": "Cateter Diagnóstico JL 4.0", "calibre_padrao": "6F" },
+      { "nome": "Introdutor", "calibre_padrao": "6F" },
+      { "nome": "Fio Guia 0.35 x 150 Teflonada"},
+      { "nome": "Manifold" },
+      { "nome": "Cateter Diagnóstico JL 3.5", "calibre_padrao": "6F" },
       { "nome": "Cateter Diagnóstico JR 4.0", "calibre_padrao": "6F" }
     ]
   },
   "catalogo": {
     "acesso_e_diagnostico": [
-      { "nome": "Bainha", "calibres": ["5F", "6F", "7F"], "procedimento": "cateterismo" },
-      { "nome": "Cateter Diagnóstico JR 4.0", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
-      { "nome": "Cateter Diagnóstico JL 4.0", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
-      { "nome": "Contraste 100ml", "procedimento": "cateterismo" }
+      { "nome": "Introdutor Femoral", "calibres": ["5F", "6F", "7F"], "procedimento": "cateterismo" },
+      { "nome": "Introdutor Radial", "calibres": ["5F", "6F", "7F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico AL1", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico AL2", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico AL3", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico AR1", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico AR2", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico AR3", "calibres": ["5F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 3.0", "calibres": ["6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 3.5", "calibres": ["5F", "6F", "7F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 4.0", "calibres": ["5F", "6F", "7F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 4.5", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 5.0", "calibres": ["5F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JL 6.0", "calibres": ["6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JR 3.5", "calibres": ["5F", "6F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico JR 4.0", "calibres": ["5F", "6F", "7F", "8F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico MP", "calibres": ["5F"], "procedimento": "cateterismo" },
+      { "nome": "Cateter Diagnóstico PigTail", "calibres": ["5F"], "procedimento": "cateterismo" },
+      { "nome": "Contraste 100ml", "procedimento": "cateterismo" },
+      { "nome": "Insuflador", "procedimento": "angioplastia" },
+      { "nome": "Manifold", "procedimento": "cateterismo" }
     ],
     "intervencao": {
       "stents": [
         {
           "marca": "Inspiron",
           "medidas": [
-            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
-            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
-            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
-            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38", "3.0x48", "3.0x58",
-            "3.5x9", "3.5x13", "3.5x16", "3.5x19", "3.5x23", "3.5x29", "3.5x33", "3.5x38", "3.5x48", "3.5x58",
-            "4.0x9", "4.0x13", "4.0x16", "4.0x19", "4.0x23", "4.0x29"
+            "2.25x16", "2.25x19", "2.25x23", "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x26", "2.5x29", "2.5x33", "2.5x38",
+            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x30", "2.75x38",
+            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x34", "3.0x48",
+            "3.5x9", "3.5x13", "3.5x16", "3.5x19", "3.5x23", "3.5x26", "3.5x30", "3.5x34", "3.5x38",
+            "4.0x9", "4.0x12", "4.0x15", "4.0x18", "4.0x22", "4.0x26", "4.0x30", "4.0x34"
           ]
         },
         {
           "marca": "Onyx Trucor",
           "medidas": [
-            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
-            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
-            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
-            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38", "3.0x48",
-            "3.5x9", "3.5x13", "3.5x16", "3.5x19", "3.5x23", "3.5x29", "3.5x33", "3.5x38"
-          ]
-        },
-        {
-          "marca": "GuReater",
-          "medidas": [
-            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
-            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
-            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
-            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38"
+            "2.25x18", "2.25x22", "2.25x26", "2.25x30", "2.25x34",
+            "2.75x15", "2.75x22", "2.75x26",
+            "3.0x18", "3.0x26", "3.0x34",
+            "3.5x12", "3.5x18", "3.5x23", "3.5x38",
+            "4.0x13", "4.0x18", "4.0x23", "4.0x29", "4.0x33", "4.0x38"
           ]
         },
         {
           "marca": "FireHawk",
           "medidas": [
-            "2.25x13", "2.25x16", "2.25x19", "2.25x23", "2.25x29",
-            "2.5x9", "2.5x13", "2.5x16", "2.5x19", "2.5x23", "2.5x29", "2.5x33", "2.5x38",
-            "2.75x9", "2.75x13", "2.75x16", "2.75x19", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
-            "3.0x9", "3.0x13", "3.0x16", "3.0x19", "3.0x23", "3.0x29", "3.0x33", "3.0x38"
+            "2.25x18", "2.25x23", "2.25x29",
+            "2.5x13", "2.5x18", "2.5x29", "2.5x33",
+            "2.75x8", "2.75x13", "2.75x18", "2.75x23", "2.75x29", "2.75x33", "2.75x38",
+            "3.0x13", "3.0x18", "3.0x23", "3.0x29",
+            "3.5x13", "3.5x18", "3.5x23", "3.5x38"
+          ]
+        },
+        {
+          "marca": "GuReater",
+          "medidas": [
+            "2.25x12", "2.25x15", "2.25x18", "2.25x21", "2.25x24", "2.25x29", "2.25x33",
+            "2.5x8", "2.5x12", "2.5x15", "2.5x18", "2.5x21", "2.5x24", "2.5x29", "2.5x33", "2.5x36",
+            "2.75x12", "2.75x15", "2.75x18", "2.75x22", "2.75x26", "2.75x33",
+            "3.0x8", "3.0x12", "3.0x15", "3.0x18", "3.0x21", "3.0x24", "3.0x29", "3.0x33", "3.0x36",
+            "3.5x12", "3.5x15", "3.5x18", "3.5x21", "3.5x24", "3.5x29", "3.5x33", "3.5x36",
+            "4.0x12", "4.0x15", "4.0x18", "4.0x21", "4.0x24", "4.0x29", "4.0x33", "4.0x36",
+            "4.5x12", "4.5x15", "4.5x18", "4.5x21", "4.5x24", "4.5x29", "4.5x33"
           ]
         }
       ],
@@ -60,28 +81,96 @@
         {
           "marca": "Euphora",
           "tipo": "SC",
-          "medidas": ["2.0x10", "2.5x15", "3.0x20"]
+          "medidas": [
+            "1.5x10", "1.5x15", "1.5x20", 
+            "2.0x6", "2.0x10", 
+            "2.25x10", "2.25x12", "2.25x15", "2.25x20", "2.25x25", 
+            "2.5x10", "2.5x12", "2.5x15", "2.5x20", "2.5x25", 
+            "2.75x10", "2.75x12", "2.75x15", "2.75x20", "2.75x25", 
+            "3.0x10", "3.0x12", "3.0x15", "3.0x20", "3.0x25", "3.0x30", 
+            "3.5x10", "3.5x15", "3.5x20", "3.5x25", "3.5x30", 
+            "3.75x10", "3.75x12", "3.75x15", "3.75x20", "3.75x25", 
+            "4.0x5", "4.0x10", "4.0x20"
+          ]
         },
         {
           "marca": "Euphora",
           "tipo": "NC",
-          "medidas": ["2.0x10", "2.5x15", "3.0x20"]
-        },
-        {
-          "marca": "Orion",
-          "tipo": "NC",
-          "medidas": ["2.0x12", "3.0x15", "3.5x15"]
+          "medidas": [
+            "2.0x6", "2.0x8", "2.0x12", "2.0x15", 
+            "2.25x8", "2.25x12", "2.25x15", "2.25x20", 
+            "2.5x8", "2.5x12", "2.5x15", "2.5x20", "2.5x27", 
+            "3.0x12", "3.0x15", "3.0x20", "3.0x27", 
+            "3.5x8", "3.5x12", "3.5x15", "3.5x20", "3.5x27", 
+            "3.75x12", "3.75x15", 
+            "4.0x6", "4.0x8", "4.0x12", "4.0x15", "4.0x20", 
+            "4.5x8", "4.5x12", "4.5x15", "4.5x20", 
+            "5.0x8", "5.0x12", "5.0x15"
+          ]
         },
         {
           "marca": "Orion",
           "tipo": "SC",
-          "medidas": ["2.0x12", "3.0x15", "3.5x15"]
+          "medidas": [
+            "1.5x10", "1.5x15", "1.5x20", 
+            "2.0x10", 
+            "2.25x10", "2.25x15", "2.25x20", "2.25x25", 
+            "2.5x10", "2.5x15", "2.5x20", "2.5x25", 
+            "2.75x10", "2.75x15", "2.75x20", "2.75x25", 
+            "3.0x10", "3.0x15", "3.0x20", "3.0x25", "3.0x30", 
+            "3.5x10", "3.5x15", "3.5x20", "3.5x25"
+          ]
+        },
+        {
+          "marca": "Orion",
+          "tipo": "NC",
+          "medidas": [
+            "2.0x10", "2.0x15", "2.0x20", "2.0x25", 
+            "2.5x10", "2.5x15", "2.5x20", "2.5x25", 
+            "3.0x10", "3.0x15", "3.0x20", "3.0x25", 
+            "3.5x10", "3.5x15", "3.5x20", "3.5x25", 
+            "4.0x10", "4.0x15", "4.0x20", "4.0x25"
+          ]
+        },
+        {
+          "marca": "FireFighter",
+          "tipo": "NC/SC",
+          "medidas": [
+            "2.0x10", "2.0x15", "2.0x20", 
+            "2.25x10", "2.25x15", "2.25x20", 
+            "2.5x10", "2.5x15", "2.5x20", 
+            "2.75x10", "2.75x15", "2.75x20", 
+            "3.0x10", "3.0x15", "3.0x20", 
+            "3.5x10", "3.5x15", "3.5x20"
+          ]
         }
       ],
       "guias": [
-        { "nome": "Cateter Guia JR 4.0", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
-        { "nome": "Cateter Guia JL 4.0", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
-        { "nome": "Fio Guia Rinato 3.5", "procedimento": "angioplastia" }
+        { "nome": "Cateter Guia EBU 3.0", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia EBU 3.5", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia EBU 4.0", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia EBU 4.5", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia IM", "calibres": ["5F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia IMA", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 3.0", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 3.5", "calibres": ["5F", "6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 4.0", "calibres": ["5F", "6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 4.5", "calibres": ["5F", "6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 5.0", "calibres": ["5F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JL 6.0", "calibres": ["6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JR 3.5", "calibres": ["5F", "6F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia JR 4.0", "calibres": ["5F", "6F", "7F", "8F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia AL1", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia AL2", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia AL3", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia AR1", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia AR2", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Cateter Guia AR3", "calibres": ["6F", "7F"], "procedimento": "angioplastia" },
+        { "nome": "Fio Guia 0.014 x 180cm", "procedimento": "angioplastia" },
+        { "nome": "Fio Guia 0.35 x 150 Hidrofílica", "procedimento": "cateterismo" },
+        { "nome": "Fio Guia 0.35 x 150 Teflonada", "procedimento": "cateterismo" },
+        { "nome": "Fio Guia 0.35 x 180 Hidrofílica", "procedimento": "cateterismo" },
+        { "nome": "Fio Guia 0.35 x 260cm", "procedimento": "cateterismo" }
       ]
     }
   }

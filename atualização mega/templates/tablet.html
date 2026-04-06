@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Procedimento - Hemodinâmica</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --text: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 { margin-top: 0; border-bottom: 2px solid var(--bg); padding-bottom: 0.5rem; }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-danger { background: var(--secondary); color: white; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn:active { opacity: 0.7; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+
+        /* Estilos específicos para seleção de materiais */
+        .category-group { margin-bottom: 1.5rem; }
+        .material-item {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background: #eee;
+        }
+
+        .paciente-lista { list-style: none; padding: 0; }
+        .paciente-lista li {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #material-list-used { 
+            margin-top: 1rem; 
+            max-height: 200px; 
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .used-item { background: #e8f4fd; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.3rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="margin:0">Sala de Procedimento</h1>
+</header>
+
+<main>
+    <!-- Seção: Seleção de Paciente -->
+    <section id="section-select-paciente" class="card">
+        <h2>Pacientes em Espera</h2>
+        <ul id="lista-pacientes" class="paciente-lista">
+            <!-- Dinâmico -->
+        </ul>
+        <button class="btn btn-primary" onclick="window.location.reload()">Atualizar Lista</button>
+        <button class="btn btn-success" style="margin-top:10px" onclick="abrirModalCatalogo()">Gerenciar Catálogo</button>
+    </section>
+
+    <!-- Seção: Painel da Sala (Ativo) -->
+    <section id="section-sala-ativa" class="card" style="display:none">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+            <h2 id="current-paciente-name" style="border:none">Paciente: Nome</h2>
+            <div id="procedimento-tipo" class="status-badge">CATETERISMO</div>
+        </div>
+
+        <div class="grid" style="margin-bottom:1rem">
+            <button id="btn-evoluir" class="btn btn-warning" onclick="evoluirParaAngio()">Evoluiu para ANGIO</button>
+            <button class="btn btn-danger" onclick="finalizarProcedimento()">Finalizar e Sair</button>
+        </div>
+
+        <h3>Adicionar Material</h3>
+        <div class="grid" id="categorias-materiais">
+            <!-- Dinâmico baseados no status do procedimento -->
+        </div>
+
+        <div id="material-selector-area" style="margin-top:1rem; display:none; background:#f9f9f9; padding:1rem; border-radius:8px">
+            <h4 id="selector-title">Selecione</h4>
+            <div id="items-grid" class="grid"></div>
+            <button class="btn btn-danger" style="margin-top:1rem; width:100%" onclick="fecharSeletor()">Fechar</button>
+        </div>
+
+        <h3>Materiais (Cateterismo):</h3>
+        <div id="material-list-cateterismo" style="max-height: 150px; overflow-y: auto; border: 1px solid #eee; padding: 0.5rem; border-radius: 8px;"></div>
+        
+        <div id="area-angioplastia-materiais" style="display:none">
+            <h3>Materiais (Angioplastia):</h3>
+            <div id="material-list-angioplastia" style="max-height: 150px; overflow-y: auto; border: 1px solid #eee; padding: 0.5rem; border-radius: 8px;"></div>
+        </div>
+    </section>
+</main>
+
+<!-- Modal: Adicionar ao Catálogo -->
+<div id="modal-catalogo" class="modal">
+    <div class="modal-content">
+        <h2>Novo Material no Catálogo</h2>
+        <select id="new-cat">
+            <option value="acesso_e_diagnostico">Acesso e Diagnóstico</option>
+            <option value="stents">Stent</option>
+            <option value="baloes">Balão</option>
+            <option value="guias">Cateter Guia / Fio Guia</option>
+        </select>
+        <input type="text" id="new-nome" placeholder="Nome (ex: Bainha, JR 4.0)">
+        <input type="text" id="new-marca" placeholder="Marca (Apenas para Stent/Balão)">
+        <div id="calibres-area">
+            <input type="text" id="new-calibres" placeholder="Calibres (ex: 5F, 6F) - Separe por vírgula">
+        </div>
+        <div id="medidas-area">
+            <input type="text" id="new-medida" placeholder="Medidas (ex: 2.5x12) - Separe por vírgula">
+        </div>
+        <select id="new-tipo">
+            <option value="">Tipo (Se houver)</option>
+            <option value="NC">NC (Não Complacente)</option>
+            <option value="SC">SC (Semi Complacente)</option>
+            <option value="Farmacológico">Farmacológico</option>
+        </select>
+        <div style="display:flex; gap:10px; margin-top:1rem">
+            <button class="btn btn-success" style="flex:1" onclick="salvarNovoMaterial()">Salvar</button>
+            <button class="btn btn-danger" style="flex:1" onclick="fecharModalCatalogo()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let materiaisData = { configuracoes: {}, catalogo: {} };
+    let pacienteAtivo = null;
+
+    async function init() {
+        await verificarPacienteAtivo();
+        if (!pacienteAtivo) await carregarPacientesEspera();
+    }
+
+    async function carregarCatalogo(procedimento = null) {
+        let url = '/api/materiais';
+        if (procedimento) url += `?procedimento=${procedimento}`;
+        const res = await fetch(url);
+        materiaisData = await res.json();
+    }
+
+    async function verificarPacienteAtivo() {
+        const res = await fetch('/api/sala/ativo');
+        const data = await res.json();
+        if (data.status !== "vazio") {
+            pacienteAtivo = data;
+            // Carrega catálogo filtrado se for apenas cateterismo e não evoluiu
+            const procFiltro = pacienteAtivo.evoluiu_angioplastia ? null : 'cateterismo';
+            await carregarCatalogo(procFiltro);
+            exibirPainelSala();
+        }
+    }
+
+    async function carregarPacientesEspera() {
+        const res = await fetch('/api/sala/espera');
+        const pacientes = await res.json();
+        const lista = document.getElementById('lista-pacientes');
+        lista.innerHTML = '';
+        pacientes.forEach(p => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${p.nome}</span> <button class="btn btn-success" onclick="confirmarInicio('${p.nome}')">Iniciar</button>`;
+            lista.appendChild(li);
+        });
+    }
+
+    async function confirmarInicio(nome) {
+        const num = prompt("Qual o número do exame? (Deixe em branco para automático)", "");
+        if (num === null) return; // Cancelou
+        await iniciarMesa(nome, num);
+    }
+
+    async function iniciarMesa(nome, num = "") {
+        await fetch('/api/sala/iniciar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ nome, procedimento: 'cateterismo', numero_exame: num })
+        });
+        verificarPacienteAtivo();
+    }
+
+    function exibirPainelSala() {
+        document.getElementById('section-select-paciente').style.display = 'none';
+        document.getElementById('section-sala-ativa').style.display = 'block';
+        document.getElementById('current-paciente-name').innerText = "Paciente: " + pacienteAtivo.nome;
+        
+        const badge = document.getElementById('procedimento-tipo');
+        const btnEvoluir = document.getElementById('btn-evoluir');
+        
+        if (pacienteAtivo.evoluiu_angioplastia) {
+            badge.innerText = "ANGIOPLASTIA";
+            badge.style.background = "#e74c3c";
+            badge.style.color = "white";
+            btnEvoluir.style.display = "none";
+        } else {
+            badge.innerText = "CATETERISMO";
+            badge.style.background = "#eee";
+            badge.style.color = "#333";
+            btnEvoluir.style.display = "block";
+        }
+
+        renderizarCategorias();
+        renderizarMateriaisUsados();
+    }
+
+    function renderizarCategorias() {
+        const grid = document.getElementById('categorias-materiais');
+        grid.innerHTML = '';
+
+        // Sempre mostra Diagnóstico
+        const btnDiag = document.createElement('button');
+        btnDiag.className = 'btn btn-primary';
+        btnDiag.innerText = 'Acesso / Diagnóstico';
+        btnDiag.onclick = () => showMaterialGrid('acesso_e_diagnostico');
+        grid.appendChild(btnDiag);
+
+        if (pacienteAtivo.evoluiu_angioplastia) {
+            const categorias = [
+                { id: 'stents', label: 'Stents' },
+                { id: 'baloes', label: 'Balões' },
+                { id: 'guias', label: 'Guias/Outros' }
+            ];
+            categorias.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-primary';
+                btn.innerText = cat.label;
+                btn.onclick = () => showMaterialGrid(cat.id);
+                grid.appendChild(btn);
+            });
+        }
+    }
+
+    function renderizarMateriaisUsados() {
+        const divCat = document.getElementById('material-list-cateterismo');
+        const divAngio = document.getElementById('material-list-angioplastia');
+        const areaAngio = document.getElementById('area-angioplastia-materiais');
+
+        divCat.innerHTML = (pacienteAtivo.materiais_cateterismo || []).map(m => `<div class="used-item">${m}</div>`).join('');
+        divCat.scrollTop = divCat.scrollHeight;
+
+        if (pacienteAtivo.evoluiu_angioplastia) {
+            areaAngio.style.display = 'block';
+            divAngio.innerHTML = (pacienteAtivo.materiais_angioplastia || []).map(m => `<div class="used-item">${m}</div>`).join('');
+            divAngio.scrollTop = divAngio.scrollHeight;
+        } else {
+            areaAngio.style.display = 'none';
+        }
+    }
+
+    function fecharSeletor() {
+        document.getElementById('material-selector-area').style.display = 'none';
+    }
+
+    function showMaterialGrid(catId) {
+        const area = document.getElementById('material-selector-area');
+        const grid = document.getElementById('items-grid');
+        const title = document.getElementById('selector-title');
+        
+        area.style.display = 'block';
+        title.innerText = catId.replace(/_/g, ' ').toUpperCase();
+        grid.innerHTML = '';
+
+        let items = [];
+        if (catId === 'acesso_e_diagnostico') {
+            items = materiaisData.catalogo.acesso_e_diagnostico || [];
+        } else {
+            items = materiaisData.catalogo.intervencao[catId] || [];
+        }
+
+        items.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-primary';
+            
+            if (catId === 'stents' || catId === 'baloes') {
+                btn.innerText = item.marca + (item.tipo ? ` (${item.tipo})` : '');
+                btn.onclick = () => showMedidasGrid(item);
+            } else if (item.calibres && item.calibres.length > 0) {
+                btn.innerText = item.nome;
+                btn.onclick = () => showCalibresGrid(item);
+            } else {
+                btn.innerText = item.nome || item.marca;
+                btn.onclick = () => usarMaterial(item.nome || item.marca);
+            }
+            grid.appendChild(btn);
+        });
+    }
+
+    function showCalibresGrid(item) {
+        const grid = document.getElementById('items-grid');
+        grid.innerHTML = '';
+        document.getElementById('selector-title').innerText = "CALIBRE: " + item.nome;
+        
+        item.calibres.forEach(cal => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-success';
+            btn.innerText = cal;
+            btn.onclick = () => usarMaterial(item.nome, cal);
+            grid.appendChild(btn);
+        });
+    }
+
+    function showMedidasGrid(item) {
+        const grid = document.getElementById('items-grid');
+        grid.innerHTML = '';
+        document.getElementById('selector-title').innerText = "MEDIDA: " + item.marca;
+
+        item.medidas.forEach(med => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-success';
+            btn.innerText = med;
+            const nomeCompleto = `${item.marca} ${item.tipo || ''} ${med}`.replace(/\s+/g, ' ').trim();
+            btn.onclick = () => usarMaterial(nomeCompleto);
+            grid.appendChild(btn);
+        });
+    }
+
+    async function usarMaterial(nomeMaterial, calibre = null) {
+        const body = { material: nomeMaterial };
+        if (calibre) body.calibre = calibre;
+
+        await fetch('/api/sala/atualizar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        });
+        fecharSeletor();
+        verificarPacienteAtivo();
+    }
+
+    async function evoluirParaAngio() {
+        if (!confirm("Confirmar evolução para Angioplastia?")) return;
+        await fetch('/api/sala/atualizar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ evoluiu_angioplastia: true })
+        });
+        verificarPacienteAtivo();
+    }
+
+    async function finalizarProcedimento() {
+        if (!confirm("Deseja finalizar o procedimento e liberar a sala?")) return;
+        await fetch('/api/sala/finalizar', { method: 'POST' });
+        window.location.reload();
+    }
+
+    // Modal Catálogo
+    function abrirModalCatalogo() { document.getElementById('modal-catalogo').style.display = 'flex'; }
+    function fecharModalCatalogo() { document.getElementById('modal-catalogo').style.display = 'none'; }
+
+    async function salvarNovoMaterial() {
+        const cat = document.getElementById('new-cat').value;
+        const nome = document.getElementById('new-nome').value;
+        const marca = document.getElementById('new-marca').value;
+        const calibresRaw = document.getElementById('new-calibres').value;
+        const medidasRaw = document.getElementById('new-medida').value;
+        const tipo = document.getElementById('new-tipo').value;
+
+        const calibres = calibresRaw ? calibresRaw.split(',').map(c => c.trim()) : [];
+        const medidas = medidasRaw ? medidasRaw.split(',').map(m => m.trim()) : [];
+
+        const obj = { 
+            categoria: cat, 
+            nome, 
+            marca, 
+            calibres, 
+            medidas, 
+            tipo,
+            procedimento: (cat === 'acesso_e_diagnostico') ? 'cateterismo' : 'angioplastia'
+        };
+
+        await fetch('/api/materiais', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(obj)
+        });
+        
+        fecharModalCatalogo();
+        alert("Material adicionado ao catálogo!");
+        verificarPacienteAtivo();
+    }
+
+    init();
+</script>
+
+</body>
+</html>

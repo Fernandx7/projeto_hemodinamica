@@ -1,25 +1,54 @@
 <div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Nome do Arquivo</th>
-                <th class="text-end">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for file in files %}
-            <tr>
-                <td>{{ file }}</td>
-                <td class="text-end">
-                    <a href="{{ url_for('view_file', filename=file) }}" class="btn btn-sm btn-secondary" target="_blank">Visualizar</a>
-                    <a href="{{ url_for('baixar', filename=file) }}" class="btn btn-sm btn-primary">Baixar</a>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="2" class="text-center text-muted">Nenhum arquivo encontrado.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form action="{{ url_for('excluir_multiplos') }}" method="POST" id="form-{{ status }}">
+        <div class="mb-2">
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Excluir selecionados?');">Excluir Selecionados</button>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" onclick="toggleAll('{{ status }}', this)"></th>
+                    <th>Nome do Arquivo</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td><input type="checkbox" name="filenames" value="{{ file }}" class="check-{{ status }}"></td>
+                    <td>{{ file }}</td>
+                    <td class="text-end">
+                        <div class="btn-group">
+                            <a href="{{ url_for('view_file', filename=file) }}" class="btn btn-sm btn-outline-secondary" target="_blank">Visualizar</a>
+                            <a href="{{ url_for('baixar', filename=file) }}" class="btn btn-sm btn-outline-primary">Baixar</a>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="excluirIndividual('{{ file }}')">Excluir</button>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">Nenhum arquivo encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
 </div>
+
+<script>
+function toggleAll(status, source) {
+    const checkboxes = document.getElementsByClassName('check-' + status);
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = source.checked;
+    }
+}
+
+function excluirIndividual(filename) {
+    if (confirm('Tem certeza que deseja excluir este arquivo?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "{{ url_for('excluir_arquivo_post', filename='') }}" + encodeURIComponent(filename);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
